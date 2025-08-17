@@ -77,4 +77,29 @@ async function getGeminiSummary(rawText, type, apiKey) {
 //Adding event listener to save button 
 document.getElementById("copy-btn").addEventListener('click',function(){
     console.log("Save Button clicked!!!");
+
+    const resultDiv = document.getElementById("result");
+    const textToCopy = resultDiv.textContent.trim();
+
+    if (!textToCopy) {
+        alert("Nothing to copy!");
+        return;
+    }
+
+    navigator.clipboard.writeText(textToCopy)
+        .then(() => {
+            console.log("Summary copied to clipboard!");
+            chrome.notifications.create('copyNotify', {
+                type: 'basic',
+                 iconUrl: 'image48.png',
+                title: 'Copied!!!',
+                message: "Successfully copied to clipboard."
+            });
+
+            // alert("Copied to clipboard!");
+        })
+        .catch(err => {
+            console.error("Failed to copy:", err);
+            alert("Could not copy text.");
+        });
 });
