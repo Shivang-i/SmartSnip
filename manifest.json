@@ -2,13 +2,26 @@
   "manifest_version": 3,
   "name": "SmartSnip - Smart AI Summarizer",
   "version": "1.0",
-  "description": "Summarize web content and bookmarks instantly using AI.",
-  "permissions": ["storage", "notifications", "contextMenus"],
+  "description": "Summarize web content and bookmarks instantly using Gemini AI.",
+  
+  "permissions": [
+    "storage",
+    "notifications",
+    "contextMenus",
+    "tabs",
+    "scripting"
+  ],
+  
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
   "icons": {
     "16": "image16.png",
     "48": "image48.png",
     "128": "image128.png"
   },
+
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -17,15 +30,20 @@
       "128": "image128.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"]
-    }
-  ],
+
   "background": {
     "service_worker": "background.js"
   },
+
   "options_page": "option.html",
-  "host_permissions": ["<all_urls>"]
+
+ "content_scripts": [
+  {
+    "matches": ["<all_urls>"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }
+]
+
+
 }
